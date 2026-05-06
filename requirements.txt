@@ -1,0 +1,11 @@
+dash
+plotly
+pandas
+numpy
+flask-login
+flask-session
+waitress
+dash_bootstrap_components
+bcrypt
+sqlalchemy
+flask-sqlalchemy
