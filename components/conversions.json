@@ -1,0 +1,1430 @@
+[
+  [
+    {
+      "Name": "Speed",
+      "IniRef": "Tim Speed",
+      "DBRef": ["TimTx%s_Speed"],
+      "Conversion": 1,
+      "Units": "secs/rev"
+    },
+    {
+      "Name": "Pressure",
+      "IniRef": "Tim Pressure",
+      "DBRef": ["TimTx%s_Pressure"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Battery",
+      "IniRef": "Tim Battery",
+      "DBRef": ["TimTx%s_BatVolts"],
+      "Conversion": 13,
+      "Units": "V"
+    },
+    {
+      "Name": "Signal Lvl",
+      "IniRef": "Tim Signal",
+      "DBRef": ["TimTx%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Latitude",
+      "IniRef": "Tim Latitude",
+      "DBRef": ["TimTx%s_Latitude"],
+      "Conversion": 11
+    },
+    {
+      "Name": "Longitude",
+      "IniRef": "Tim Longitude",
+      "DBRef": ["TimTx%s_Longitude"],
+      "Conversion": 11
+    },
+    {
+      "Name": "Alm1",
+      "DBRef": ["TimTx%s_Status1"],
+      "Conversion": 2,
+      "Args": ["5", "Low Battery Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm2",
+      "DBRef": ["TimTx%s_Status1"],
+      "Conversion": 3,
+      "Args": ["2", "Moving too slow Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm3",
+      "DBRef": ["TimTx%s_Status1"],
+      "Conversion": 3,
+      "Args": ["4", "Not moving Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm4",
+      "DBRef": ["TimTx%s_Status1"],
+      "Conversion": 3,
+      "Args": ["6", "End of Travel Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm5",
+      "DBRef": ["TimTx%s_Status1"],
+      "Conversion": 3,
+      "Args": ["7", "Moving too fast Alarm", ""],
+      "Alarm": true
+    }
+  ],
+
+  [
+    {
+      "Name": "Pod Pressure",
+      "IniRef": "Kim Pod Pressure",
+      "DBRef": ["KimTx%s_Pressure"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Calibration",
+      "IniRef": "Kim Calibration",
+
+      "DBRef": ["KimTx%s_CalLevel"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Battery",
+      "IniRef": "Kim Battery",
+      "DBRef": ["KimTx%s_BatVolts"],
+      "Conversion": 13,
+      "Units": "V"
+    },
+    {
+      "Name": "Signal Lvl",
+      "IniRef": "Kim Signal",
+      "DBRef": ["KimTx%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Alm1",
+      "DBRef": ["KimTx%s_Status1"],
+      "Conversion": 2,
+      "Args": ["5", "Low Battery Alm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm2",
+      "DBRef": ["KimTx%s_Status1"],
+      "Conversion": 4,
+      "Args": ["4", "Low Pod Pressure Alm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm3",
+      "DBRef": ["KimTx%s_Status1"],
+      "Conversion": 4,
+      "Args": ["6", "No Pod Pressure Alm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm4",
+      "DBRef": ["KimTx%s_Status1"],
+      "Conversion": 3,
+      "Args": ["7", "High Pod Pressure Alm", ""],
+      "Alarm": true
+    }
+  ],
+
+  [
+    {
+      "Name": "Pivot Press",
+      "IniRef": "Pim Pivot Pressure",
+      "DBRef": ["PimTx%s_Pressure"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Calibration",
+      "IniRef": "Pim Calibration",
+      "DBRef": ["PimTx%s_CalLevel"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Battery",
+      "IniRef": "Pim Battery",
+      "DBRef": ["PimTx%s_BatVolts"],
+      "Conversion": 13,
+      "Units": "V"
+    },
+    {
+      "Name": "Signal Lvl",
+      "IniRef": "Pim Signal",
+      "DBRef": ["PimTx%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Latitude",
+      "IniRef": "PIM Latitude",
+      "DBRef": ["PimTx%s_Latitude"],
+      "Conversion": 11
+    },
+    {
+      "Name": "Longitude",
+      "IniRef": "PIM Longitude",
+      "DBRef": ["PimTx%s_Longitude"],
+      "Conversion": 11
+    },
+    {
+      "Name": "Mov. Press",
+      "IniRef": "PIM MoveMon Pressure",
+      "DBRef": ["MovMon%s_Pressure"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Mov. BatV",
+      "IniRef": "PIM MoveMon Battery",
+      "DBRef": ["MovMon%s_BatVolts"],
+      "Conversion": 13,
+      "Units": "V"
+    },
+    {
+      "Name": "Mov. Sig. Lvl",
+      "IniRef": "PIM MoveMon Signal",
+      "DBRef": ["MovMon%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Mov. Pivot",
+      "DBRef": ["MovMon%s_Status1"],
+      "Conversion": 2,
+      "Args": ["1", "Moving", "Stopped"]
+    },
+    {
+      "Name": "Alm1",
+      "DBRef": ["PimTx%s_Status1"],
+      "Conversion": 2,
+      "Args": ["5", "Low Pivot Battery Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm2",
+      "DBRef": ["PimTx%s_Status1"],
+      "Conversion": 3,
+      "Args": ["4", "Low Pivot Pressure Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm3",
+      "DBRef": ["PimTx%s_Status1"],
+      "Conversion": 3,
+      "Args": ["6", "No Pivot Pressure Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm4",
+      "DBRef": ["PimTx%s_Status1"],
+      "Conversion": 3,
+      "Args": ["7", "High Pivot Pressure Alarm", ""],
+      "Alarm": true
+    }
+  ],
+
+  [
+    {
+      "Name": "Level",
+      "IniRef": "Sump Level",
+      "DBRef": ["SumpMon%s_Level"],
+      "Conversion": 1,
+      "Units": "%"
+    },
+    {
+      "Name": "Pressure",
+      "IniRef": "Sump Pressure",
+      "DBRef": ["SumpMon%s_Pressure"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Signal Lvl",
+      "IniRef": "Sump Signal",
+      "DBRef": ["SumpMon%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Flow Rate",
+      "IniRef": "Sump Flow Rate",
+      "DBRef": ["SumpMon%s_FlowRateH", "SumpMon%s_FlowRateL"],
+      "Conversion": 6,
+      "Args": ["SumpMon%s_FlowFactor", "DEFAULT", "0"]
+    },
+    {
+      "Name": "Transfer",
+      "IniRef": "Sump Transfer",
+      "DBRef": ["SumpMon%s_Status1"],
+      "Conversion": 2,
+      "Args": ["2", "Running", "Stopped"]
+    },
+    {
+      "Name": "Agitator",
+      "IniRef": "Sump Agitator",
+      "DBRef": ["SumpMon%s_Status1"],
+      "Conversion": 2,
+      "Args": ["3", "Running", "Stopped"]
+    },
+    {
+      "Name": "Auto AG",
+      "IniRef": "Sump Agitator",
+      "DBRef": ["SumpMon%s_Status1"],
+      "Conversion": 2,
+      "Args": ["4", "On", "Off"]
+    },
+    {
+      "Name": "Alm1",
+      "DBRef": ["SumpMon%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["0", "High Level Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm2",
+      "DBRef": ["SumpMon%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["1", "Overflow Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm3",
+      "DBRef": ["SumpMon%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["2", "Transfer Fail Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm4",
+      "DBRef": ["SumpMon%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["3", "Agitator Fail Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm5",
+      "DBRef": ["SumpMon%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["4", "Loss of prime Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm6",
+      "DBRef": ["SumpMon%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["5", "High TR Pmp Press Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm7",
+      "DBRef": ["SumpMon%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["6", "Low TR Pmp Press Alarm", ""],
+      "Alarm": true
+    }
+  ],
+
+  [
+    {
+      "Name": "Level 1",
+      "IniRef": "Pond 1 Level",
+      "DBRef": ["Pond%s_Pond1Level"],
+      "Conversion": 1,
+      "Units": "%"
+    },
+    {
+      "Name": "Level 2",
+      "IniRef": "Pond 2 Level",
+      "DBRef": ["Pond%s_Pond2Level"],
+      "Conversion": 1,
+      "Units": "%"
+    },
+    {
+      "Name": "Pressure",
+      "IniRef": "Pond Pressure",
+      "DBRef": ["Pond%s_Pressure"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Flow Rate",
+      "IniRef": "Pond Flow Rate",
+      "DBRef": ["Pond%s_FlowRateH", "Pond%s_FlowRateL"],
+      "Conversion": 6,
+      "Args": ["Pond%s_FlowFactor", "Pond%s_Status2", "6"]
+    },
+    {
+      "Name": "Flow Today",
+      "IniRef": "Pond Flow Today",
+      "DBRef": ["Pond %s"],
+      "Conversion": 5,
+      "Args": ["0", "19", "16", "17", "18"],
+      "Units": "L"
+    },
+    {
+      "Name": "Flow Yesterday",
+      "IniRef": "Pond Flow Yest",
+      "DBRef": ["Pond %s"],
+      "Conversion": 5,
+      "Args": ["1", "19", "16", "17", "18"],
+      "Units": "L"
+    },
+    {
+      "Name": "Battery",
+      "IniRef": "Pond Battery",
+      "DBRef": ["Pond%s_BatVolts"],
+      "Conversion": 13,
+      "Units": "V"
+    },
+    {
+      "Name": "Signal Lvl",
+      "IniRef": "Pond Signal",
+      "DBRef": ["Pond%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Alm1",
+      "DBRef": ["Pond%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["0", "Low Pond 1 Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm2",
+      "DBRef": ["Pond%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["1", "High Pond 1 Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm3",
+      "DBRef": ["Pond%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["2", "Low Pond 2 Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm4",
+      "DBRef": ["Pond%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["3", "High Pond 2 Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm5",
+      "DBRef": ["Pond%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["4", "No Flow Alarm", ""],
+      "Alarm": true
+    }
+  ],
+
+  [
+    {
+      "Name": "Tank Level",
+      "IniRef": "Bore Tank Level",
+      "DBRef": ["Bore%s_TankLevel"],
+      "Conversion": 1,
+      "Units": "%"
+    },
+    {
+      "Name": "Pressure",
+      "IniRef": "Bore Pressure",
+      "DBRef": ["Bore%s_Pressure"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Flow Rate",
+      "IniRef": "Bore Flow Rate",
+      "DBRef": ["Bore%s_FlowRateH", "Bore%s_FlowRateL"],
+      "Conversion": 6,
+      "Args": ["Bore%s_FlowFactor", "Bore%s_Status2", "6"]
+    },
+    {
+      "Name": "Flow Today",
+      "IniRef": "Bore Flow Today",
+      "DBRef": ["Bore %s"],
+      "Conversion": 5,
+      "Args": ["0", "19", "16", "17", "18"],
+      "Units": "L"
+    },
+    {
+      "Name": "Flow Yesterday",
+      "IniRef": "Bore Flow Yest",
+      "DBRef": ["Bore %s"],
+      "Conversion": 5,
+      "Args": ["1", "19", "16", "17", "18"],
+      "Units": "L"
+    },
+    {
+      "Name": "Battery",
+      "IniRef": "Bore Battery",
+      "DBRef": ["Bore%s_BatVolts"],
+      "Conversion": 13,
+      "Units": "V"
+    },
+    {
+      "Name": "Bore Level",
+      "IniRef": "Bore Level",
+      "DBRef": ["Bore%s_BoreLevel"],
+      "Conversion": 1,
+      "Units": "%"
+    },
+    {
+      "Name": "Signal Lvl",
+      "IniRef": "Bore Signal",
+      "DBRef": ["Bore%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Alm1",
+      "DBRef": ["Bore%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["0", "Tank High Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm2",
+      "DBRef": ["Bore%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["1", "Tank Low Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm3",
+      "DBRef": ["Bore%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["2", "Bore High Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm4",
+      "DBRef": ["Bore%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["3", "Bore Low Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm5",
+      "DBRef": ["Bore%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["4", "Low Battery Alarm", ""],
+      "Alarm": true
+    }
+  ],
+
+  [
+    {
+      "Name": "Level 1",
+      "IniRef": "Tank Level 1",
+      "DBRef": ["TankMonitor%s_Level1"],
+      "Conversion": 1,
+      "Units": "%"
+    },
+    {
+      "Name": "Level 2",
+      "IniRef": "Tank Level 2",
+      "DBRef": ["TankMonitor%s_Level2"],
+      "Conversion": 1,
+      "Units": "%"
+    },
+    {
+      "Name": "Level 3",
+      "IniRef": "Tank Level 3",
+      "DBRef": ["TankMonitor%s_Level3"],
+      "Conversion": 1,
+      "Units": "%"
+    },
+    {
+      "Name": "Level 4",
+      "IniRef": "Tank Level 4",
+      "DBRef": ["TankMonitor%s_Level4"],
+      "Conversion": 1,
+      "Units": "%"
+    },
+    {
+      "Name": "Pressure",
+      "IniRef": "Tank Pressure",
+      "DBRef": ["TankMonitor%s_Pressure"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Flow Rate",
+      "IniRef": "Tank Flow Rate",
+      "DBRef": ["TankMonitor%s_FlowRateH", "TankMonitor%s_FlowRateL"],
+      "Conversion": 6,
+      "Args": ["TankMonitor%s_FlowFactor", "TankMonitor%s_Status2", "6"]
+    },
+    {
+      "Name": "Flow Today",
+      "IniRef": "Tank Flow Today",
+      "DBRef": ["Tank Monitor %s"],
+      "Conversion": 5,
+      "Args": ["0", "19", "16", "17", "18"],
+      "Units": "L"
+    },
+    {
+      "Name": "Flow Yest",
+      "IniRef": "Tank Flow Yest",
+      "DBRef": ["Tank Monitor %s"],
+      "Conversion": 5,
+      "Args": ["1", "19", "16", "17", "18"],
+      "Units": "L"
+    },
+    {
+      "Name": "Battery",
+      "IniRef": "Tank Battery",
+      "DBRef": ["TankMonitor%s_BatVolts"],
+      "Conversion": 13,
+      "Units": "V"
+    },
+    {
+      "Name": "Signal Lvl",
+      "IniRef": "Tank Signal",
+      "DBRef": ["TankMonitor%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    }
+  ],
+
+  [
+    {
+      "Name": "Voltage",
+      "IniRef": "Fence Voltage",
+      "DBRef": ["Fence%s_FenceVolts"],
+      "Conversion": 13,
+      "Units": "kV"
+    },
+    {
+      "Name": "Alarm SP",
+      "IniRef": "Fence Alm SP",
+      "DBRef": ["Fence%s_LowSP"],
+      "Conversion": 13,
+      "Units": "kV"
+    },
+    {
+      "Name": "Battery",
+      "IniRef": "Fence Battery",
+      "DBRef": ["Fence%s_BatV"],
+      "Conversion": 13,
+      "Units": "V"
+    },
+    {
+      "Name": "Signal Lvl",
+      "IniRef": "Fence Signal",
+      "DBRef": ["Fence%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Alm1",
+      "DBRef": ["Fence%s_Status1"],
+      "Conversion": 2,
+      "Args": ["0", "Low Voltage Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm2",
+      "DBRef": ["Fence%s_Status1"],
+      "Conversion": 2,
+      "Args": ["1", "Low Battery Alarm", ""],
+      "Alarm": true
+    }
+  ],
+
+  [
+    {
+      "Name": "Temp",
+      "IniRef": "Vat Temp",
+      "DBRef": ["VatMonitor%s_Vat1TmpH", "VatMonitor%s_Vat1TmpL"],
+      "Conversion": 7,
+      "Units": "°C"
+    },
+    {
+      "Name": "Cooler In Temp",
+      "IniRef": "Vat Cooler In",
+      "DBRef": ["VatMonitor%s_InLetTmpH", "VatMonitor%s_InLetTmpL"],
+      "Conversion": 7,
+      "Units": "°C"
+    },
+    {
+      "Name": "Cooler Out Temp",
+      "IniRef": "Vat Cooler Out",
+      "DBRef": ["VatMonitor%s_OutLetTmpH", "VatMonitor%s_OutLetTmpL"],
+      "Conversion": 7,
+      "Units": "°C"
+    },
+    {
+      "Name": "Wash Temp",
+      "IniRef": "Vat Wash Temp",
+      "DBRef": ["VatMonitor%s_Vat1WashTmpH", "VatMonitor%s_Vat1WashTmpL"],
+      "Conversion": 7,
+      "Units": "°C"
+    },
+    {
+      "Name": "Water Temp",
+      "IniRef": "Vat Water Temp",
+      "DBRef": ["VatMonitor%s_Vat1WaterTmpH", "VatMonitor%s_Vat1WaterTmpL"],
+      "Conversion": 7,
+      "Units": "°C"
+    },
+    {
+      "Name": "Signal Lvl",
+      "IniRef": "Vat Signal",
+      "DBRef": ["VatMonitor%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Battery",
+      "IniRef": "Vat Battery",
+      "DBRef": ["VatMonitor%s_Battery"],
+      "Conversion": 13,
+      "Units": "V"
+    },
+    {
+      "Name": "Stirrer",
+      "DBRef": ["VatMonitor%s_Status1"],
+      "Conversion": 2,
+      "Args": ["2", "On", ""]
+    },
+    {
+      "Name": "Plant Wash",
+      "DBRef": ["VatMonitor%s_Status1"],
+      "Conversion": 2,
+      "Args": ["4", "On", ""]
+    },
+    {
+      "Name": "Vat Wash",
+      "DBRef": ["VatMonitor%s_Status1"],
+      "Conversion": 2,
+      "Args": ["5", "On", ""]
+    },
+    {
+      "Name": "Out Tap",
+      "IniRef": "Vat Out Tap",
+      "DBRef": ["VatMonitor%s_Status1"],
+      "Conversion": 2,
+      "Args": ["1", "Open", "Closed"]
+    },
+    {
+      "Name": "Vacuum System",
+      "IniRef": "Vat Vacuum",
+      "DBRef": ["VatMonitor%s_Status1"],
+      "Conversion": 2,
+      "Args": ["3", "On", "Off"]
+    },
+    {
+      "Name": "Trend",
+      "IniRef": "Vat Trend",
+      "DBRef": ["VatMonitor%s_Status2"],
+      "Conversion": 2,
+      "Args": ["0", "Rising", "1", "Falling", "Steady"]
+    },
+    {
+      "Name": "Alm1",
+      "DBRef": ["VatMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["0", "High Temp 4hr Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm2",
+      "DBRef": ["VatMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["1", "High Temp 6hr Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm3",
+      "DBRef": ["VatMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["2", "High Post Milk Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm4",
+      "DBRef": ["VatMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["3", "High Next Milk Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm5",
+      "DBRef": ["VatMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["4", "Low Temp Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm6",
+      "DBRef": ["VatMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["5", "Cooler Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm7",
+      "DBRef": ["VatMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["6", "Outlet Tap Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm8",
+      "DBRef": ["VatMonitor%s_Alarm2"],
+      "Conversion": 2,
+      "Args": ["0", "Phase Fail Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm9",
+      "DBRef": ["VatMonitor%s_Alarm2"],
+      "Conversion": 2,
+      "Args": ["1", "Low Battery Alarm", ""],
+      "Alarm": true
+    }
+  ],
+
+  [
+    {
+      "Name": "Wind Speed",
+      "IniRef": "Weather Wind Speed",
+      "DBRef": ["Weather%s_WindSpeed"],
+      "Conversion": 1,
+      "Units": "km/h"
+    },
+    {
+      "Name": "Wind Dir",
+      "IniRef": "Weather Wind Dir",
+      "DBRef": ["Weather%s_WindDir"],
+      "Conversion": 15
+    },
+    {
+      "Name": "Battery",
+      "IniRef": "Weather Battery",
+      "DBRef": ["Weather%s_BatVolts"],
+      "Conversion": 13,
+      "Units": "V"
+    },
+    {
+      "Name": "Rain Today",
+      "IniRef": "Weather Rain Today",
+      "DBRef": ["Weather %s"],
+      "Conversion": 5,
+      "Args": ["0", "0.2", "9"],
+      "Units": "mm"
+    },
+    {
+      "Name": "Rain Yest",
+      "IniRef": "Weather Rain Yest",
+      "DBRef": ["Weather %s"],
+      "Conversion": 5,
+      "Args": ["1", "0.2", "9"],
+      "Units": "mm"
+    },
+    {
+      "Name": "Soil Temp. {1}",
+      "IniRef": "Weather Soil Temp",
+      "DBRef": ["Weather%s_SoilTmp1"],
+      "Conversion": 16,
+      "Units": "°C"
+    },
+    {
+      "Name": "Soil Moisture {1}",
+      "IniRef": "Weather Soil Moisture",
+      "DBRef": ["Weather%s_Moist1"],
+      "Conversion": 17,
+      "Units": "%"
+    },
+    {
+      "Name": "Soil Temp. {2}",
+      "IniRef": "Weather Soil Temp",
+      "DBRef": ["Weather%s_SoilTmp2"],
+      "Conversion": 16,
+      "Units": "°C"
+    },
+    {
+      "Name": "Soil Moisture {2}",
+      "IniRef": "Weather Soil Moisture",
+      "DBRef": ["Weather%s_Moist2"],
+      "Conversion": 17,
+      "Units": "%"
+    },
+    {
+      "Name": "Air Temp",
+      "IniRef": "Weather Air Temp",
+      "DBRef": ["Weather%s_AirTempH", "Weather%s_AirTempL"],
+      "Conversion": 8,
+      "Units": "°C"
+    },
+    {
+      "Name": "Humidity",
+      "IniRef": "Weather Humidity",
+      "DBRef": ["Weather%s_HumidityH", "Weather%s_HumidityL"],
+      "Conversion": 9,
+      "Args": ["Weather%s_AirTempH", "Weather%s_AirTempL"],
+      "Units": "%"
+    },
+    {
+      "Name": "Signal Lvl",
+      "IniRef": "Weather Signal",
+      "DBRef": ["Weather%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Alm1",
+      "DBRef": ["Weather%s_Status1"],
+      "Conversion": 2,
+      "Args": ["3", "Low Battery Alarm", ""],
+      "Alarm": true
+    }
+  ],
+
+  [
+    {
+      "Name": "IR Pump",
+      "IniRef": "DPL IR Pump",
+      "DBRef": ["DPLinkToHub%s_Status1", "DPLinkToHub%s_Output2"],
+      "Conversion": 19,
+      "Args": [" Running", " Failed", " Stopped"]
+    },
+    {
+      "Name": "Last Stop",
+      "IniRef": "DPL IR Pump",
+      "DBRef": ["HubToDPLink%s_StopMes"],
+      "Conversion": 20,
+      "Args": [],
+      "Alarm": true
+    },
+    {
+      "Name": "Pmp Press",
+      "IniRef": "DPL IR Pump Pressure",
+      "DBRef": ["DPLinkToHub%s_Pressure"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Pond Level",
+      "IniRef": "DPL Pond Level",
+      "DBRef": ["DPLinkToHub%s_PondLvl"],
+      "Conversion": 1,
+      "Units": "%"
+    },
+    {
+      "Name": "Flow Rate",
+      "IniRef": "DPL Flow Rate",
+      "DBRef": ["DPLinkToHub%s_FlowRateH", "DPLinkToHub%s_FlowRateL"],
+      "Conversion": 6,
+      "Args": ["DPLinkToHub%s_FlowFactor", "DPLinkToHub%s_Alarm2", "7"]
+    },
+    {
+      "Name": "Flow Today",
+      "IniRef": "DPL Flow Today",
+      "DBRef": ["DPLink-Hub %s"],
+      "Conversion": 5,
+      "Args": ["0", "19", "16", "17", "18"],
+      "Units": "L"
+    },
+    {
+      "Name": "Flow Yest",
+      "IniRef": "DPL Flow Yest",
+      "DBRef": ["DPLink-Hub %s"],
+      "Conversion": 5,
+      "Args": ["1", "19", "16", "17", "18"],
+      "Units": "L"
+    },
+    {
+      "Name": "Air Temp",
+      "IniRef": "DPL Air Temp",
+      "DBRef": ["DPLinkToHub%s_TempH", "DPLinkToHub%s_TempL"],
+      "Conversion": 7,
+      "Units": "°C"
+    },
+    {
+      "Name": "Last Run Time",
+      "IniRef": "DPL IR Pmp Last Run",
+      "Conversion": 21
+    },
+    {
+      "Name": "IR Hrs Today",
+      "IniRef": "DPL IR Hrs Today",
+      "Conversion": 18,
+      "Args": ["0"]
+    },
+    {
+      "Name": "IR Hrs Yest",
+      "IniRef": "DPL IR Hrs Yest",
+      "Conversion": 18,
+      "Args": ["1"]
+    },
+    {
+      "Name": "RxSignal",
+      "IniRef": "DPL Signal",
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Agitator",
+      "IniRef": "DPL Agitator",
+      "DBRef": ["DPLinkToHub%s_Status1"],
+      "Conversion": 2,
+      "Args": ["1", "Running", "Stopped"]
+    },
+    {
+      "Name": "Greenwash",
+      "IniRef": "DPL Greenwash",
+      "DBRef": ["DPLinkToHub%s_OutPut1"],
+      "Conversion": 2,
+      "Args": ["3", "On", "Off"]
+    },
+    {
+      "Name": "IR Valve{1}",
+      "IniRef": "DPL IR Valve 1",
+      "DBRef": ["DPLinkToHub%s_OutPut1"],
+      "Conversion": 2,
+      "Args": ["4", "Open", "Closed"]
+    },
+    {
+      "Name": "TR Valve{2}",
+      "IniRef": "DPL TR Valve 2",
+      "DBRef": ["DPLinkToHub%s_OutPut1"],
+      "Conversion": 2,
+      "Args": ["5", "Open", "Closed"]
+    },
+    {
+      "Name": "Valve 3",
+      "IniRef": "DPL Valve 3",
+      "DBRef": ["DPLinkToHub%s_OutPut2"],
+      "Conversion": 2,
+      "Args": ["0", "Open", "Closed"]
+    },
+    {
+      "Name": "Valve 4",
+      "IniRef": "DPL Valve 4",
+      "DBRef": ["DPLinkToHub%s_OutPut2"],
+      "Conversion": 2,
+      "Args": ["1", "Open", "Closed"]
+    },
+    {
+      "Name": "IR Mode",
+      "IniRef": "DPL IR Mode",
+      "DBRef": ["DPLinkToHub%s_OutPut2"],
+      "Conversion": 2,
+      "Args": ["2", "On", "Off"]
+    },
+    {
+      "Name": "Auto AG Mode",
+      "IniRef": "DPL Auto AG Mode",
+      "DBRef": ["DPLinkToHub%s_OutPut2"],
+      "Conversion": 2,
+      "Args": ["3", "On", "Off"]
+    },
+    {
+      "Name": "Get-Back",
+      "IniRef": "DPL Get Back",
+      "DBRef": ["DPLinkToHub%s_Status2"],
+      "Conversion": 2,
+      "Args": ["6", "On", "Off"]
+    },
+    {
+      "Name": "Alm1",
+      "DBRef": ["DPLinkToHub%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["0", "High IR Pump Pressure Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm2",
+      "DBRef": ["DPLinkToHub%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["1", "Low IR Pump Pressure Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm3",
+      "DBRef": ["DPLinkToHub%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["2", "Loss of Prime Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm4",
+      "DBRef": ["DPLinkToHub%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["3", "No Valve Open Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm5",
+      "DBRef": ["DPLinkToHub%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["4", "High Pond Lvl Alarm", ""],
+      "Alarm": true
+    }
+  ],
+
+  [
+    {
+      "Name": "Pressure",
+      "IniRef": "Larall Pressure",
+      "DBRef": ["Larall%s_Pressure"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Battery",
+      "IniRef": "Larall Battery",
+      "DBRef": ["Larall%s_BatV"],
+      "Conversion": 13,
+      "Args": ["50"],
+      "Units": "V"
+    },
+    {
+      "Name": "Calibration",
+      "IniRef": "Larall Calibration",
+      "DBRef": ["Larall%s_CalLevel1"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Flow Today",
+      "IniRef": "Larall Flow Today",
+      "DBRef": ["Larall %s"],
+      "Conversion": 5,
+      "Args": ["0", "25", "22", "23", "24"],
+      "Units": "L"
+    },
+    {
+      "Name": "Flow Yest",
+      "IniRef": "Larall Flow Yest",
+      "DBRef": ["Larall %s"],
+      "Conversion": 5,
+      "Args": ["1", "25", "22", "23", "24"],
+      "Units": "L"
+    },
+    {
+      "Name": "Flow Rate",
+      "IniRef": "Larall Flow Rate",
+      "DBRef": ["Larall%s_FlowRateH", "Larall%s_FlowRateL"],
+      "Conversion": 6,
+      "Args": ["GIM%s_FlowFactor", "GIM%s_Status2", "7"]
+    },
+    {
+      "Name": "Temp {Outside}",
+      "IniRef": "Larall Outside Temp",
+      "DBRef": ["Larall%s_OutTempH", "Larall%s_OutTempL"],
+      "Conversion": 7,
+      "Units": "°C"
+    },
+    {
+      "Name": "Humidity {Outside}",
+      "IniRef": "Larall Outside Humidity",
+      "DBRef": ["Larall%s_OutHumidityH", "Larall%s_OutHumidityL"],
+      "Conversion": 7,
+      "Args": ["Larall%s_OutTempH", "Larall%s_OutTempL"],
+      "Units": "%"
+    },
+    {
+      "Name": "Dewpoint {Outside}",
+      "IniRef": "Larall Outside DewPoint",
+      "DBRef": ["Larall%s_OutDuePointH", "Larall%s_OutDuePointL"],
+      "Conversion": 7,
+      "Units": "°C"
+    },
+    {
+      "Name": "Temp {Inside}",
+      "IniRef": "Larall Inside Temp",
+      "DBRef": ["Larall%s_InTempH", "Larall%s_InTempL"],
+      "Conversion": 7,
+      "Units": "°C"
+    },
+    {
+      "Name": "Humidity {Inside}",
+      "IniRef": "Larall Inside Humidity",
+      "DBRef": ["Larall%s_InHumidityH", "Larall%s_InHumidityL"],
+      "Conversion": 7,
+      "Args": ["Larall%s_InTempH", "Larall%s_InTempL"],
+      "Units": "%"
+    },
+    {
+      "Name": "Dewpoint {Inside}",
+      "IniRef": "Larall Inside DewPoint",
+      "DBRef": ["Larall%s_InDuePointH", "Larall%s_InDuePointL"],
+      "Conversion": 7,
+      "Units": "°C"
+    },
+    {
+      "Name": "Signal Lvl",
+      "IniRef": "Larall Signal",
+      "DBRef": ["Larall%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Alm1",
+      "DBRef": ["Larall%s_Status1"],
+      "Conversion": 2,
+      "Args": ["5", "Low Battery Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm2",
+      "DBRef": ["Larall%s_Status1"],
+      "Conversion": 3,
+      "Args": ["4", "Low GIM Pressure Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm3",
+      "DBRef": ["Larall%s_Status1"],
+      "Conversion": 3,
+      "Args": ["6", "No GIM Pressure Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm4",
+      "DBRef": ["Larall%s_Status1"],
+      "Conversion": 3,
+      "Args": ["7", "High GIM Pressure Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Msg1",
+      "DBRef": ["Larall%s_Status2"],
+      "Conversion": 2,
+      "Args": ["0", "Gun 1 On", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Msg2",
+      "DBRef": ["Larall%s_Status2"],
+      "Conversion": 2,
+      "Args": ["1", "Gun 2 On", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Msg3",
+      "DBRef": ["Larall%s_Status2"],
+      "Conversion": 2,
+      "Args": ["2", "Gun 3 On", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Msg4",
+      "DBRef": ["Larall%s_Status2"],
+      "Conversion": 2,
+      "Args": ["3", "Gun 4 On", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Msg5",
+      "DBRef": ["Larall%s_Status2"],
+      "Conversion": 2,
+      "Args": ["4", "Gun 5 On", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Msg6",
+      "DBRef": ["Larall%s_Status2"],
+      "Conversion": 2,
+      "Args": ["5", "Gun 6 On", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Heater",
+      "DBRef": ["Larall%s_Status2"],
+      "Conversion": 2,
+      "Args": ["6", "On", "Off"]
+    },
+    {
+      "Name": "Alm5",
+      "DBRef": ["Larall%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["0", "Gun 1 Failed Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm6",
+      "DBRef": ["Larall%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["1", "Gun 2 Failed Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm7",
+      "DBRef": ["Larall%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["2", "Gun 3 Failed Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm8",
+      "DBRef": ["Larall%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["3", "Gun 4 Failed Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm9",
+      "DBRef": ["Larall%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["4", "Gun 5 Failed Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm10",
+      "DBRef": ["Larall%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["5", "Gun 6 Failed Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Vacuum Pump",
+      "DBRef": ["Larall%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["6", "On", "Off"]
+    },
+    {
+      "Name": "Frost Mode",
+      "DBRef": ["Larall%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["7", "On", "Off"]
+    }
+  ],
+
+  [
+    {
+      "Name": "Today's Take",
+      "IniRef": "River Count Today",
+      "DBRef": [
+        "RiverMonitor%s_FlowCnt3",
+        "RiverMonitor%s_FlowCnt2",
+        "RiverMonitor%s_FlowCnt1"
+      ],
+      "Conversion": 22,
+      "Units": "L"
+    },
+    {
+      "Name": "Pump Pressure",
+      "IniRef": "River Pressure",
+      "DBRef": ["RiverMonitor%s_Pressure"],
+      "Conversion": 1,
+      "Units": "psi"
+    },
+    {
+      "Name": "Tank Level",
+      "IniRef": "River Tank Level",
+      "DBRef": ["RiverMonitor%s_TankLevel"],
+      "Conversion": 1,
+      "Units": "%"
+    },
+    {
+      "Name": "Battery",
+      "IniRef": "River Battery",
+      "DBRef": ["RiverMonitor%s_BatVolts"],
+      "Conversion": 13,
+      "Units": "V"
+    },
+    {
+      "Name": "Signal Lvl",
+      "IniRef": "River Signal",
+      "DBRef": ["RiverMonitor%s_RxSignal"],
+      "Conversion": 14,
+      "Units": "%"
+    },
+    {
+      "Name": "Flow Rate",
+      "IniRef": "River Flow Rate",
+      "DBRef": ["RiverMonitor%s_FlowRateH", "RiverMonitor%s_FlowRateL"],
+      "Conversion": 6,
+      "Args": ["RiverMonitor%s_FlowFactor", "RiverMonitor%s_Status1", "5"]
+    },
+    {
+      "Name": "Selection",
+      "IniRef": "River Selector",
+      "DBRef": ["RiverMonitor%s_Status2"],
+      "Conversion": 2,
+      "Args": ["0", "Minimum", "1", "Medium", "2", "Maximum", "Off"]
+    },
+    {
+      "Name": "Pump",
+      "IniRef": "River Pump",
+      "DBRef": ["RiverMonitor%s_Status1"],
+      "Conversion": 2,
+      "Args": ["3", "Running", "Stopped"]
+    },
+    {
+      "Name": "Frost Mode",
+      "DBRef": ["RiverMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["5", "On", "Off"]
+    },
+    {
+      "Name": "Alm1",
+      "DBRef": ["RiverMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["0", "High Pmp Press. Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm2",
+      "DBRef": ["RiverMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["1", "Low Pmp Press. Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm3",
+      "DBRef": ["RiverMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["2", "High Pond Level Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm4",
+      "DBRef": ["RiverMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["3", "Low Pond Level Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm5",
+      "DBRef": ["RiverMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["4", "Low Battery Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm6",
+      "DBRef": ["RiverMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["6", "Storage High Alarm", ""],
+      "Alarm": true
+    },
+    {
+      "Name": "Alm7",
+      "DBRef": ["RiverMonitor%s_Alarm1"],
+      "Conversion": 2,
+      "Args": ["7", "Pump Failed Alarm", ""],
+      "Alarm": true
+    }
+  ]
+]

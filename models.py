@@ -7,6 +7,13 @@ class User(UserMixin):
     def __init__(self, user_model):
         self.id = user_model.username
         self.display_name = user_model.display_name
+        self.esp = user_model.esp
+        self.site_address = user_model.site_address
+        
+        # Calculated fields
+        self.farm_path = f"farmtrenz/ESP_{self.esp:05d}"
+        self.tagdb_path = f"{self.farm_path}/SiteAdd_{self.site_address:02x}h_{self.site_address:02d}/TagDB"
+        
 
 class UserModel(db.Model):
     __tablename__ = "farms"
@@ -40,33 +47,26 @@ class UserModel(db.Model):
 class DeviceReferenceModel(db.Model):
     __tablename__ = "device_reference"
     device = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False)
     tag_name = db.Column(db.Text, nullable=False)
     file_name = db.Column(db.Text, nullable=False)
     has_line = db.Column(db.Boolean, default=False)
     has_bar = db.Column(db.Boolean, default=False)
     has_gps = db.Column(db.Boolean, default=False)
     hidden = db.Column(db.Boolean, default=False)
+    tag_defs = db.Column(db.Text, nullable=True)  # JSON blob of list of dicts
     
-
-class DeviceDefsModel(db.Model):
-    __tablename__ = "device_defs"
-    id_ = db.Column('id', db.Integer, primary_key=True)
-    device = db.Column(db.Integer, db.ForeignKey('device_reference.device'), nullable=False)
-    tag = db.Column(db.Text, nullable=False)
-    conversion = db.Column(db.Integer, nullable=False)
-    args = db.Column(db.Text, nullable=True)
-    label = db.Column(db.Text, nullable=False)
-    default = db.Column(db.Boolean, default=True) # enabled by default
-    unit = db.Column(db.Text, nullable=True)
-    type_ = db.Column('type', db.Integer, default=0) # 0 = value, 1 = alarm
+    def get_tag_defs(self):
+        return json.loads(self.tag_defs or "[]")
     
 class DevicesModel(db.Model):
     __tablename__ = "devices"
     id_ = db.Column('id', db.Integer, primary_key=True)
-    device = db.Column(db.Integer, nullable=False)
+    device = db.Column(db.Integer, db.ForeignKey('device_reference.device'), nullable=False)
     code = db.Column(db.Integer, nullable=False)
     alias = db.Column(db.Text, nullable=True)
     esp = db.Column(db.Integer, db.ForeignKey('farms.esp'), nullable=False)
     installed = db.Column(db.DateTime, nullable=True)
     info = db.Column(db.Text, nullable=True)
     
+    device_ref = db.relationship("DeviceReferenceModel")

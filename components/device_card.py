@@ -39,9 +39,9 @@ def alarm_text(text: str | list | None):
 def device_card(
         name,
         last_updated,
+        values : list[tuple[str, str, bool]],
+        alarms : list[str],
         alias=None,
-        values=None,
-        alarms=None,
         preText=None,
         postText=None,
         show_gps=False,
@@ -80,6 +80,8 @@ def device_card(
         for label, icon, href in actions
     ]
     
+    alarm_texts = [html.Hr(), *alarm_text(alarms)] if len(alarms) > 0 else []
+    
     return dbc.Card([
         dbc.CardHeader([
             dbc.Container([
@@ -100,8 +102,7 @@ def device_card(
             *pre_text(preText),
             *value_text(values),
             *post_text(postText),
-            html.Hr(),
-            *alarm_text(alarms),
+            *alarm_texts,
         ], className="card-text text-wrap"),
         
         dbc.CardFooter("2 hrs, 3 mins, 15 secs ago", className="text-muted") # TODO: last_updated calculation

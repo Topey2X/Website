@@ -8,28 +8,58 @@ import csv
 
 MAX_LAST_RUN_SEARCH = 7  # days
 
-class Conversion(Enum):
+# TConversionType = (
+#     ctNone,
+#     ctHexToInt,
+#     ctBitInByte,  //Arg: Bit, True String, {Bit, TS}*, False String
+#     ctBitInByteIRRunn, //^^ but IRRunn needs to be true in DPLink.
+#     ctBitInByteActiveKim, //^^ but must not have another active KIM.
+#     ctFlowCounts,  //DBRef: name of device (with id), location of TagDB
+#     ct2ByteFlowRate,  //Arg: (DBRef of FlowFactor, DBRef of L/s, Bit of L/s)
+#     ct2ByteDS18B20Temp,
+#     ct2ByteSHT1xTemp,
+#     ct2ByteSHT1xHumidity,  //Arg: (DBRef[s] of Air Temp);
+#     ctRiverMaxTake,
+#     ctLatLong,
+#     ct2ByteDS18B20Humidity,  //Arg: (DBRef[s] of Air Temp);
+#     ctBattery,
+#     ctSignal,
+#     ctWindDir,
+#     ctSoilTemp,
+#     ctSoilMoisture,
+#     ctDPLHourCount,
+#     ctPumpStoppedMsg,  //Arg: Bit, TrueString, StopMessageRef
+#     ctPumpStatusMsg,  //Arg: Bit, TrueString, StopMessageRef
+#     ctDPLLastRun,
+#     ctRiverCount
+#   );
+
+class ConversionType(Enum):
     """Method definitions to convert raw values into human-readable formats."""
+    NONE = 0
     HEX_TO_INT = 1
     BIT_IN_BYTE = 2
-    TWO_BYTE_FLOW_RATE = 3
-    TWO_BYTE_DS18B20_TEMP = 4
-    TWO_BYTE_SHT1X_TEMP = 5
-    TWO_BYTE_SHT1X_HUMIDITY = 6
-    TWO_BYTE_DS18B20_HUMIDITY = 7
-    RIVER_MAX_TAKE = 8
-    BATTERY = 9
-    RX_SIGNAL = 10
-    FLOW_COUNTS = 11
-    WIND_DIR = 12
-    SOIL_TEMP = 13
-    SOIL_MOISTURE = 14
-    DPL_HOUR_COUNT = 15
-    PUMP_STOPPED_MSG = 16
-    PUMP_STATUS_MSG = 17
-    LAT_LONG = 18
-    DPL_LAST_RUN = 19
-    RIVER_COUNTS = 20
+    BIT_IN_BYTE_IRRUNN = 3
+    BIT_IN_BYTE_ACTIVE_KIM = 4
+    FLOW_COUNTS = 5
+    TWO_BYTE_FLOW_RATE = 6
+    TWO_BYTE_DS18B20_TEMP = 7
+    TWO_BYTE_SHT1X_TEMP = 8
+    TWO_BYTE_SHT1X_HUMIDITY = 9
+    RIVER_MAX_TAKE = 10
+    LAT_LONG = 11
+    TWO_BYTE_DS18B20_HUMIDITY = 12
+    BATTERY = 13
+    SIGNAL = 14
+    WIND_DIR = 15
+    SOIL_TEMP = 16
+    SOIL_MOISTURE = 17
+    DPL_HOUR_COUNT = 18
+    PUMP_STOPPED_MSG = 19
+    PUMP_STATUS_MSG = 20
+    DPL_LAST_RUN = 21
+    RIVER_COUNT = 22
+    
 
 def hex_to_int(hex_str: str) -> str:
     if hex_str.upper() == 'FF':
@@ -37,7 +67,7 @@ def hex_to_int(hex_str: str) -> str:
     return str(int(hex_str, 16))
 
 def bit_in_byte(hex_str: str, bit: int) -> bool:
-    return (int(hex_str, 16) & (1 << bit)) != 0
+    return (int(hex_str, 16) & (1 << int(bit))) != 0
 
 def two_byte_flow_rate(hex_str: str, flow_factor: str, lps: bool) -> str:
     val = int(hex_str, 16) * (10 ** (int(flow_factor) - 1))
@@ -359,28 +389,3 @@ def lat_long(raw: str) -> str:
 
 def river_counts(raw: str) -> str:
     return raw
-
-
-def get_conversion(id : int) -> FunctionType | None:
-    conversions : dict[int, FunctionType] = {
-        Conversion.HEX_TO_INT.value: hex_to_int,
-        Conversion.BIT_IN_BYTE.value: bit_in_byte,
-        Conversion.TWO_BYTE_FLOW_RATE.value: two_byte_flow_rate,
-        Conversion.TWO_BYTE_DS18B20_TEMP.value: two_byte_ds18b20_temp,
-        Conversion.TWO_BYTE_SHT1X_TEMP.value: two_byte_sht1x_temp,
-        Conversion.TWO_BYTE_SHT1X_HUMIDITY.value: two_byte_sht1x_humidity,
-        Conversion.TWO_BYTE_DS18B20_HUMIDITY.value: two_byte_ds18b20_humidity,
-        Conversion.RIVER_MAX_TAKE.value: river_max_take,
-        Conversion.BATTERY.value: battery,
-        Conversion.RX_SIGNAL.value: rx_signal,
-        Conversion.WIND_DIR.value: wind_dir,
-        Conversion.SOIL_TEMP.value: soil_temp,
-        Conversion.SOIL_MOISTURE.value: soil_moisture,
-        Conversion.DPL_HOUR_COUNT.value: dpl_hour_count,
-        Conversion.PUMP_STOPPED_MSG.value: pump_stopped_msg,
-        Conversion.PUMP_STATUS_MSG.value: pump_status_msg,
-        Conversion.LAT_LONG.value: lat_long,
-        Conversion.DPL_LAST_RUN.value: dpl_last_run,
-        Conversion.RIVER_COUNTS.value: river_counts
-    }
-    return conversions.get(id, None)

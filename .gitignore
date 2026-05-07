@@ -1,0 +1,12 @@
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+# Ignore virtual environment directories
+venv/
+env/
+# Ignore IDE specific files
+.idea/
+.vscode/
+# Ignore farmtrenz specific files
+farmtrenz/
