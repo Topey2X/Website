@@ -231,19 +231,39 @@ def update_dashboard():
         ))
     return [dbc.Col(card, width=12, lg=6, xxl=4, className="pb-3") for card in cards]
 
+def update_dashboard_children():
+    return dbc.Row(update_dashboard(), id="dashboard-row")
+
 def dashboard_layout():
     return dbc.Container([
-        dbc.Row(update_dashboard(), id="dashboard-row"),
+        dcc.Loading(
+            dbc.Container(update_dashboard_children(), id="dashboard-wrapper", fluid=True, className="p-0"),
+            id = "loading-dashboard",
+            type = "circle",
+            delay_hide = 700,
+            show_initially=False,
+            target_components={"dashboard-wrapper": "children"}, # type: ignore # This is a valid TargetComponents dict, but the type checker doesn't like it for some reason
+            style={"position": "absolute", "top": 0, "left": 0, "width": "100%", "height": "100%", "zIndex": 1050},
+            color="#ffffff",
+        ),
         dcc.Interval(id="refresh-interval", interval=60*1000, n_intervals=0)
-    ], fluid=True, className="pb-2")
+    ], fluid=True, className="px-3 pb-2")
     
 dash.register_page("dashboard", path="/", layout=dashboard_layout)
 
 @callback(
     Output("dashboard-row", "children"),
-    Input("refresh-btn", "n_clicks"),
     Input("refresh-interval", "n_intervals"),
     prevent_initial_call=True
 )
-def refresh_dashboard(n_intervals, n_clicks):
+def refresh_dashboard_silent(n_intervals):
     return update_dashboard()
+
+@callback(
+    Output("dashboard-wrapper", "children"),
+    Output("refresh-interval", "interval"),
+    Input("refresh-btn", "n_clicks"),
+    prevent_initial_call=True
+)
+def refresh_dashboard_manual(n_clicks):
+    return update_dashboard_children(), 60*1000 # Reset interval to 60 seconds on manual refresh

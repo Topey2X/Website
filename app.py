@@ -32,7 +32,7 @@ app.layout = dbc.Container(
         ),
     ],
     fluid=True,
-    className="py-0 px-3",
+    className="p-0",
     style={"backgroundColor": "#001737", "minHeight": "100vh"},
 )
 
