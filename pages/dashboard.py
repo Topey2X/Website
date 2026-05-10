@@ -1,11 +1,12 @@
 import random
+from time import sleep
 import dash
 from dash import html, dcc, Input, Output, State, callback
 from flask import session
 from flask_login import current_user
 from server import db
 import dash_bootstrap_components as dbc
-from components.device_card import device_card_example, device_card
+from components.device_card import device_card
 from models import DevicesModel, UserModel
 import configparser
 from components.conversions import *
@@ -32,6 +33,9 @@ def update_dashboard():
     if not files_read:
         print(f"Warning: Could not read TagDB.ini at {tagdb_ini}") # Debugging output # TODO: error handling
     
+    def get_location(s):
+        return s.replace("""%s""", str(device.code))
+    
     cards = []
     for device in devices:
         # Lookup values and alarms for this device from the database.
@@ -42,6 +46,7 @@ def update_dashboard():
         
         values : list[tuple[str,str,bool]]= []
         alarms : list[str] = []
+        messages : list[str] = []
         
         currently_pumping = None # None = unknown, True = pumping, False = not pumping
         active_kim = None # None = unknown, True = this KIM is active, False = this KIM is not active.
@@ -50,30 +55,48 @@ def update_dashboard():
         currently_pumping = True
         active_kim = True
         # HACK: End
+        
+        last_updated = None
          
         for device_def in device_defs:
             # Go through and lookup values
             errored : bool = False
             
-            def get_location(s):
-                return s.replace("""%s""", str(device.code))
-            locations : list[str] = [get_location(s) for s in device_def.get("DBRef", [])] # DBRef is a JSON array.
             
+            locations : list[str] = [get_location(s) for s in device_def.get("DBRef", [])] # DBRef is a JSON array.
+            conversion = ConversionType(device_def.get("Conversion", 0))
             raw_values : list[str] = []
+            
+            location : str | None = None
             for location in locations:
                 raw = tagdb.get(location, 'Value', fallback=None)
-                if raw is None:
-                    errored = True
+                if raw is None: 
+                    if conversion not in [ConversionType.FLOW_COUNTS, ConversionType.DPL_HOUR_COUNT, ConversionType.DPL_LAST_RUN]: # These conversions can work without a raw value, so we allow missing values for them
+                        errored = True
                     break
                 raw_values.append(raw)
             if errored: # TODO: Error handling for missing values
+                print(f"Error: Missing value for device {device.device_ref.name} code {device.code} at location {location if location is not None else 'Unknown'}") # Debugging output
                 continue
             
-            raw_value = "".join(raw_values)
-            if raw_value == "": # TODO: Error handling for empty values
-                continue
+            if len(raw_values) > 0:
+                raw_value = "".join(raw_values)
+                if raw_value == "": # TODO: Error handling for empty values
+                    print(f"Error: Empty value for device {device.device_ref.name} code {device.code} at location {location if location is not None else 'Unknown'}") # Debugging output
+                    continue
+            else:
+                raw_value = "" # Some conversions can work with an empty string, so we allow this case.
+            # Be aware: some conversions use historical files and won't have any raw_value to convert, so we pass None in that case and handle it in the conversion function.
             
             # TODO: Timeouts
+            update = None
+            if len(locations) > 0:
+                update = tagdb.get(locations[0], 'LastUpdate', fallback=None)
+                if update is not None:
+                    update_time = datetime.strptime(update, "%d/%m/%Y %H:%M:%S")
+                    if last_updated is None or update_time > last_updated:
+                        last_updated = update_time
+                    
             
             def convert_value(conversion_type : ConversionType) -> tuple[str, bool] | None:
                 # Convert raw values using the appropriate conversion function
@@ -85,7 +108,6 @@ def update_dashboard():
                         return hex_to_int(raw_value), False
                         
                     case ConversionType.BIT_IN_BYTE:
-                        value_is_bool = True
                         converted_value = None
                         for x in range(len(device_def["Args"]) // 2):
                             bit_pos = int(device_def["Args"][x * 2])
@@ -180,7 +202,7 @@ def update_dashboard():
                 return None
                     
             
-            converted_value = convert_value(ConversionType(device_def["Conversion"]))
+            converted_value = convert_value(conversion)
             if converted_value is None:
                 continue # TODO: error handling for failed conversions
             converted_value_str, value_is_bool = converted_value
@@ -189,29 +211,39 @@ def update_dashboard():
                 if converted_value_str != '':
                     alarms.append(converted_value_str)
             else:
-                values.append((device_def["Name"], f"{converted_value_str} {device_def.get('Units', '')}", value_is_bool))
+                if converted_value_str != '': # Don't show values that convert to an empty string
+                    if device_def.get("Message", False) == True:
+                        messages.append(converted_value_str)
+                    else:
+                        values.append((device_def["Name"], f"{converted_value_str} {device_def.get('Units', '')}", value_is_bool))
         
         cards.append(device_card(
-            name=f"{device.device_ref.name} {device.code}", # TODO: Alias
-            last_updated="2024-06-01T12:00:00Z", # TODO: device.last_updated
+            name=f"{device.device_ref.name} {device.code}",
+            alias=device.alias,
+            last_updated=last_updated,
             values=values,
             alarms=alarms,
+            messages=messages,
             show_bar=device.device_ref.has_bar,
             show_line=device.device_ref.has_line,
             show_gps=device.device_ref.has_gps,
             # show_edit=True
         ))
-    return [dbc.Col(card, width=12) for card in cards]
+    return [dbc.Col(card, width=12, lg=6, xxl=4, className="pb-3") for card in cards]
 
 def dashboard_layout():
-    return dbc.Container(dcc.Loading(dbc.Row([
-    ], id="dashboard-row")), fluid=True, className="pb-2")
+    return dbc.Container([
+        dbc.Row(update_dashboard(), id="dashboard-row"),
+        dcc.Interval(id="refresh-interval", interval=60*1000, n_intervals=0)
+    ], fluid=True, className="pb-2")
     
 dash.register_page("dashboard", path="/", layout=dashboard_layout)
 
 @callback(
     Output("dashboard-row", "children"),
-    Input("dashboard-row", "id"), # Fires once on mount
+    Input("refresh-btn", "n_clicks"),
+    Input("refresh-interval", "n_intervals"),
+    prevent_initial_call=True
 )
-def load_dashboard(_):
+def refresh_dashboard(n_intervals, n_clicks):
     return update_dashboard()

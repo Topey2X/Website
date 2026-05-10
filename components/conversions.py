@@ -322,8 +322,8 @@ def pump_status_msg(status_mes: str, args: list[str]) -> str:
         38: (" High Pond Lvl Alarm", True),
         39: (" Doing KIM Off Time", False),
         40: (" Opening IR Valve", True),
-        41: (" Finished GnWash", False),
-        42: (" Opening GW Valve", True),
+        41: (" Finished Greenwash", False),
+        42: (" Opening Greenwash Valve", True),
         43: (" Link Failed", False),
         44: (" No Pivot Stop Signal", False),
         45: (" Calibration Failed", False),
@@ -380,7 +380,9 @@ def pump_status_msg(status_mes: str, args: list[str]) -> str:
         return ' N/A'
 
 def lat_long(raw: str) -> str:
-    pos = raw.find('.') - 1
+    if "00.0000" in raw:
+        return ' N/A'
+    pos = raw.find('.') - 2 # Latitude and longitude are in the format DDDMM.MMMM
     if pos > 0:
         result = list(raw)
         result.insert(pos, '° ')

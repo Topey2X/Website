@@ -1,5 +1,36 @@
 from dash import html
 import dash_bootstrap_components as dbc
+from datetime import datetime
+
+def age_text(last_updated: datetime | None) -> tuple[str, bool]:
+    """Converts a timestamp into a string representation how long ago it was 
+
+    Args:
+        last_updated (datetime | None): Timestamp
+
+    Returns:
+        tuple[str, bool]: (X minutes ago, [whether the data is considered active])
+    """
+    if last_updated is None:
+        return "Never updated", False
+    now = datetime.now(last_updated.tzinfo)
+    diff = now - last_updated
+    total_seconds = int(diff.total_seconds())
+    
+    minutes = (total_seconds % 3600) // 60
+    if minutes < 1:
+        return "Just now", True
+    
+    hours = (total_seconds % (3600*24)) // 3600
+    days = total_seconds // (3600*24)
+    
+    if days > 365:
+        return f"Over {days // 365} year{'s' if days >= (365*2) else ''} ago", False
+    if days > 0:
+        return f"{days} day{'s' if days >= 2 else ''} ago", False
+    if hours > 0:
+        return f"{hours} hr{'s' if hours >= 2 else ''},  {minutes} min{'s' if minutes >= 2 else ''} ago", False
+    return f"{minutes} min{'s' if minutes >= 2 else ''} ago", total_seconds < (3600/2)
 
 def pre_text(text: str | list | None):
     if text is None:
@@ -29,25 +60,38 @@ def post_text(text: str | list | None):
         text = [text]
     return [html.Div(line) for line in text]
 
-def alarm_text(text: str | list | None):
+def alarm_text(text: str | list | None) -> list:
     if text is None:
         return []
     if isinstance(text, str):
         text = [text]
-    return [html.Div(line, className="text-danger fw-bold") for line in text]
+    return [
+        html.Div([
+            html.I(className="bi bi-exclamation-triangle me-1 text-danger"),
+            html.Span(line, className="text-danger fw-bold")
+        ]) for line in text
+    ]
+
+def message_text(text: str | list | None) -> list:
+    if text is None:
+        return []
+    if isinstance(text, str):
+        text = [text]
+    return [html.Div(line, className="fw-bold") for line in text]
 
 def device_card(
-        name,
-        last_updated,
+        name : str,
+        last_updated : datetime | None,
         values : list[tuple[str, str, bool]],
         alarms : list[str],
-        alias=None,
-        preText=None,
-        postText=None,
-        show_gps=False,
-        show_bar=False,
-        show_line=False,
-        show_edit=False
+        messages : list[str],
+        alias : str | None = None,
+        preText : str | list[str] | None = None,
+        postText : str | list[str] | None = None,
+        show_gps : bool = False,
+        show_bar : bool = False,
+        show_line : bool = False,
+        show_edit : bool = False
     ):
     actions : list[tuple[str, str, str]] = []
     if show_gps:
@@ -80,52 +124,62 @@ def device_card(
         for label, icon, href in actions
     ]
     
-    alarm_texts = [html.Hr(), *alarm_text(alarms)] if len(alarms) > 0 else []
+    message_texts = [html.Hr(), *message_text(messages)] if len(messages) > 0 else []
+    alarm_texts = [*alarm_text(alarms), html.Hr()] if len(alarms) > 0 else []
+    
+    timestamp_text, is_active = age_text(last_updated)
+
+    if alias is not None:
+        title = [
+            html.H4(alias, className="text-left mb-0", style={"fontSize": "1.6rem"}),
+            html.H6(name, className="text-left text-muted fs-6"),
+        ]
+    else:
+        title = [
+            html.H4(name, className="text-left", style={"fontSize": "1.6rem"}),
+        ]
     
     return dbc.Card([
         dbc.CardHeader([
             dbc.Container([
                 dbc.Row([
-                    dbc.Col(
-                        html.H3(name, className="text-center fs-4"),
-                        className="pt-2",
-                        width="auto"
-                    ),
+                    dbc.Col(title, className="pt-2 pb-0", width="auto"),
                     dbc.Col([
                         dbc.Row(action_cols),
-                    ],  className="ms-auto", width="auto")
-                ], className="align-items-center", justify="between"),
-            ], fluid=True, className="pl-2 pr-5"),
-        ], className="px-2 py-9"),
+                    ], width="auto", className="justify-content-end py-2")
+                ], className="align-items-center pe-2", justify="between"),
+            ], fluid=True, className="p-0 m-0"),
+        ], className="py-0"),
         
         dbc.CardBody([
+            *alarm_texts,
             *pre_text(preText),
             *value_text(values),
             *post_text(postText),
-            *alarm_texts,
+            *message_texts,
         ], className="card-text text-wrap"),
         
-        dbc.CardFooter("2 hrs, 3 mins, 15 secs ago", className="text-muted") # TODO: last_updated calculation
-    ], className="shadow border-dark mt-0 mb-3")
+        dbc.CardFooter(timestamp_text, className="text-muted" if is_active else "text-danger")
+    ], className=f"shadow {'border-dark' if is_active else 'border-danger'} mt-0 mb-3", style={"minHeight": "100%"})
 
-import random
-def device_card_example():
-    return device_card(
-        name="Device 1",
-        last_updated="2024-06-01T12:00:00Z",
-        preText="This is a device card example.",
-        values=[
-            random.choice([("Temperature", "25°C", False),
-            ("Humidity", "60%", False),
-            ("Online", "Yes", True)]) for _ in range(random.randint(4, 15))
-        ],
-        postText="Last maintenance: 2024-05-15",
-        alarms=[
-            "High temperature detected!",
-            "Low humidity detected!"
-        ],
-        show_bar=True,
-        show_line=True,
-        show_gps=True,
-        show_edit=True
-    )
+# import random
+# def device_card_example():
+#     return device_card(
+#         name="Device 1",
+#         last_updated=datetime.now(),
+#         preText="This is a device card example.",
+#         values=[
+#             random.choice([("Temperature", "25°C", False),
+#             ("Humidity", "60%", False),
+#             ("Online", "Yes", True)]) for _ in range(random.randint(4, 15))
+#         ],
+#         postText="Last maintenance: 2024-05-15",
+#         alarms=[
+#             "High temperature detected!",
+#             "Low humidity detected!"
+#         ],
+#         show_bar=True,
+#         show_line=True,
+#         show_gps=True,
+#         show_edit=True
+#     )
