@@ -42,7 +42,7 @@ def update_dashboard():
         if not device.device_ref:
             continue
         
-        device_defs : list = device.device_ref.get_tag_defs() 
+        device_tags : list = device.device_ref.get_tag_defs() 
         
         values : list[tuple[str,str,bool]]= []
         alarms : list[str] = []
@@ -58,13 +58,23 @@ def update_dashboard():
         
         last_updated = None
          
-        for device_def in device_defs:
+        for device_tag in device_tags:
+            # Check if the tag is enabled
+            iniRef = device_tag.get("IniRef", None)
+            if iniRef:     
+                tag_enabled = device.get_tag_override(iniRef)
+                if tag_enabled is None:
+                    # Find default enabled state for this tag
+                    tag_enabled = device_tag.get("Default", True)
+                if not tag_enabled:
+                    continue # Skip disabled tags
+                           
+            
             # Go through and lookup values
             errored : bool = False
             
-            
-            locations : list[str] = [get_location(s) for s in device_def.get("DBRef", [])] # DBRef is a JSON array.
-            conversion = ConversionType(device_def.get("Conversion", 0))
+            locations : list[str] = [get_location(s) for s in device_tag.get("DBRef", [])] # DBRef is a JSON array.
+            conversion = ConversionType(device_tag.get("Conversion", 0))
             raw_values : list[str] = []
             
             location : str | None = None
@@ -109,14 +119,14 @@ def update_dashboard():
                         
                     case ConversionType.BIT_IN_BYTE:
                         converted_value = None
-                        for x in range(len(device_def["Args"]) // 2):
-                            bit_pos = int(device_def["Args"][x * 2])
+                        for x in range(len(device_tag["Args"]) // 2):
+                            bit_pos = int(device_tag["Args"][x * 2])
                             if bit_in_byte(raw_value, bit_pos):
-                                converted_value = device_def["Args"][x * 2 + 1]
+                                converted_value = device_tag["Args"][x * 2 + 1]
                                 break
 
                         if converted_value is None:
-                            converted_value = device_def["Args"][-1]
+                            converted_value = device_tag["Args"][-1]
                         return converted_value, True
                     
                     case ConversionType.BIT_IN_BYTE_IRRUNN:
@@ -137,8 +147,8 @@ def update_dashboard():
                         ...# TODO: This requires going into historical values :P
                     
                     case ConversionType.TWO_BYTE_FLOW_RATE:
-                        flow_factor = tagdb.get(get_location(device_def["Args"][0]), 'Value', fallback='1')
-                        lps = bit_in_byte(tagdb.get(get_location(device_def["Args"][1]), 'Value', fallback='0'), device_def["Args"][2])
+                        flow_factor = tagdb.get(get_location(device_tag["Args"][0]), 'Value', fallback='1')
+                        lps = bit_in_byte(tagdb.get(get_location(device_tag["Args"][1]), 'Value', fallback='0'), device_tag["Args"][2])
                         return two_byte_flow_rate(raw_value, flow_factor, lps), False 
                     
                     case ConversionType.TWO_BYTE_DS18B20_TEMP:
@@ -146,8 +156,8 @@ def update_dashboard():
                     
                     case ConversionType.TWO_BYTE_DS18B20_HUMIDITY:
                         air_value = ''
-                        for i in range(len(device_def["Args"])):
-                            air_value += tagdb.get(get_location(device_def["Args"][i]), 'Value', fallback='0')
+                        for i in range(len(device_tag["Args"])):
+                            air_value += tagdb.get(get_location(device_tag["Args"][i]), 'Value', fallback='0')
                         return two_byte_ds18b20_humidity(raw_value, air_value), False
                     
                     case ConversionType.TWO_BYTE_SHT1X_TEMP:
@@ -155,14 +165,14 @@ def update_dashboard():
                     
                     case ConversionType.TWO_BYTE_SHT1X_HUMIDITY:
                         air_value = ''
-                        for i in range(len(device_def["Args"])):
-                            air_value += tagdb.get(get_location(device_def["Args"][i]), 'Value', fallback='0')
+                        for i in range(len(device_tag["Args"])):
+                            air_value += tagdb.get(get_location(device_tag["Args"][i]), 'Value', fallback='0')
                         return two_byte_ds18b20_humidity(raw_value, air_value), False
                     
                     case ConversionType.BATTERY:
                         offset = 0
-                        if len(device_def.get("Args", [])) > 0:
-                            offset = int(device_def["Args"][0])
+                        if len(device_tag.get("Args", [])) > 0:
+                            offset = int(device_tag["Args"][0])
                         return battery(raw_value, offset), False
                     
                     case ConversionType.SIGNAL:
@@ -183,10 +193,10 @@ def update_dashboard():
                         ...# TODO: This requires historical values
                         
                     case ConversionType.PUMP_STATUS_MSG:
-                        return pump_status_msg(raw_value, device_def["Args"]), False
+                        return pump_status_msg(raw_value, device_tag["Args"]), False
                     
                     case ConversionType.PUMP_STOPPED_MSG:
-                        return pump_stopped_msg(raw_value, device_def["Args"]), False
+                        return pump_stopped_msg(raw_value, device_tag["Args"]), False
                     
                     case ConversionType.LAT_LONG:
                         return lat_long(raw_value), False
@@ -207,15 +217,15 @@ def update_dashboard():
                 continue # TODO: error handling for failed conversions
             converted_value_str, value_is_bool = converted_value
             
-            if device_def.get("Alarm", False) == True:
+            if device_tag.get("Alarm", False) == True:
                 if converted_value_str != '':
                     alarms.append(converted_value_str)
             else:
                 if converted_value_str != '': # Don't show values that convert to an empty string
-                    if device_def.get("Message", False) == True:
+                    if device_tag.get("Message", False) == True:
                         messages.append(converted_value_str)
                     else:
-                        values.append((device_def["Name"], f"{converted_value_str} {device_def.get('Units', '')}", value_is_bool))
+                        values.append((device_tag["Name"], f"{converted_value_str} {device_tag.get('Units', '')}", value_is_bool))
         
         cards.append(device_card(
             name=f"{device.device_ref.name} {device.code}",

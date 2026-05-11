@@ -72,16 +72,23 @@ class DevicesModel(db.Model):
     
     device_ref = db.relationship("DeviceReferenceModel")
     
-    def get_tag_states(self) -> dict:
+    
+    def get_all_tags(self) -> dict:
         return json.loads(self.settings or "{}").get("device_overrides", {})
     
-    def set_tag_state(self, tag_name, state) -> None:
+    def get_tag_override(self, tag_name) -> bool | None:
+        overrides = self.get_all_tags()
+        if tag_name in overrides:
+            return overrides[tag_name]
+        return None # Caller should fall back to default if None is returned
+    
+    def set_tag_override(self, tag_name, state) -> None:
         data = json.loads(self.settings or "{}")
         data.setdefault("device_overrides", {})  # ensures the key exists
         data["device_overrides"][tag_name] = state
         self.settings = json.dumps(data)
     
-    def reset_tag_state(self, tag_name) -> bool:
+    def reset_tag_override(self, tag_name) -> bool:
         data = json.loads(self.settings or "{}")
         if "device_overrides" in data and tag_name in data["device_overrides"]:
             del data["device_overrides"][tag_name]

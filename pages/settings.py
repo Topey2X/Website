@@ -31,7 +31,7 @@ def get_all_components() -> dict:
         device_name = device.device_ref.name
         device_code = device.code
         device_friendly_name = device.alias if device.alias else f"{device_name} {device_code}"
-        overrides = device.get_tag_states() # Overrides specific to this device, keyed by tag name. This allows per-device overrides instead of just global ones.
+        overrides = device.get_all_tags() # Overrides specific to this device, keyed by tag name. This allows per-device overrides instead of just global ones.
         
         device_settings = {}
         # We need to go through the default tags and then apply overrides if available.
@@ -118,10 +118,10 @@ def update_component(checkbox_value, _, id):
         return {"visibility": "hidden"}, "", no_update
 
     if ctx.triggered_id and ctx.triggered_id["type"] == "tag-reset-btn":
-        checkbox_value = device.reset_tag_state(tag_name)
+        checkbox_value = device.reset_tag_override(tag_name)
         db.session.commit()
         return {"visibility": "hidden"}, "", checkbox_value
 
-    device.set_tag_state(tag_name, checkbox_value)
+    device.set_tag_override(tag_name, checkbox_value)
     db.session.commit()
     return {"visibility": "visible"}, "fw-bold", no_update
