@@ -4,10 +4,9 @@ from flask import session
 from server import db
 
 def reports_layout():
-    number = session.get("saved_number", "No number saved yet.")
+    # Placeholder coming soon text
     return html.Div([
-        html.H3("Reports"),
-        html.P(f"Number from session: {number}"),
+        html.H1("Reports (Coming Soon)", className="text-center text-light mt-5")
     ])
 
 dash.register_page("reports", path="/reports", layout=reports_layout)

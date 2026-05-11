@@ -68,5 +68,28 @@ class DevicesModel(db.Model):
     esp = db.Column(db.Integer, db.ForeignKey('farms.esp'), nullable=False)
     installed = db.Column(db.DateTime, nullable=True)
     info = db.Column(db.Text, nullable=True)
+    settings = db.Column(db.Text, nullable=True) # JSON blob for user overrides of component settings
     
     device_ref = db.relationship("DeviceReferenceModel")
+    
+    def get_tag_states(self) -> dict:
+        return json.loads(self.settings or "{}").get("device_overrides", {})
+    
+    def set_tag_state(self, tag_name, state) -> None:
+        data = json.loads(self.settings or "{}")
+        data.setdefault("device_overrides", {})  # ensures the key exists
+        data["device_overrides"][tag_name] = state
+        self.settings = json.dumps(data)
+    
+    def reset_tag_state(self, tag_name) -> bool:
+        data = json.loads(self.settings or "{}")
+        if "device_overrides" in data and tag_name in data["device_overrides"]:
+            del data["device_overrides"][tag_name]
+            self.settings = json.dumps(data)
+        # Need to return the original state so we can update the UI accordingly
+        default_tags = self.device_ref.get_tag_defs()
+        for tag in default_tags:
+            if tag.get("IniRef", None) == tag_name:
+                return tag.get("Default", True) # Default to enabled if not specified
+        return True # If we can't find the tag definition, default to enabled (this shouldn't happen)
+        
